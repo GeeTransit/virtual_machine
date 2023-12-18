@@ -1,0 +1,11 @@
+.BEGIN 0x3000
+
+LEA r0 HELLO_STR
+
+PRINTS
+
+STOP
+
+HELLOSTR "Hello, World"
+
+.END
