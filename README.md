@@ -1,2 +1,2 @@
-# virtual_machine
+# Virtual Machine
 Simulated virtual machine for a fictional assembly language.
