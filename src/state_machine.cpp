@@ -70,7 +70,7 @@ void reset_state(StateMachine& pProgramState)
 
   for(int i = 0; i < NUM_REGISTERS; i++)
   {
-    std::string empty("0", 16);
+    std::string empty = "";
     pProgramState.registers.push_back(empty);
   }
 }
@@ -88,6 +88,7 @@ void execute_program(StateMachine& pProgramState, Program& pProgram)
   {
     pProgramState.instCount++;
     std::string inst = pProgram.ppInstructions[pProgramState.instCount];
+    
     if(inst.compare("STOP") == 0)
     {
       break;
@@ -98,12 +99,12 @@ void execute_program(StateMachine& pProgramState, Program& pProgram)
       int reg;
       char stringVar[16];
       sscanf(inst.c_str(), "LEA r%i %s", &reg, &stringVar);
-      pProgramState.registers[reg] = pProgram.stringTable[stringVar];
+      pProgramState.registers[reg].assign(pProgram.stringTable[stringVar].c_str());
     }
 
     if(__instruction_exists(inst, "PRINTS"))
     {
-      printf("%s", pProgramState.registers[0]);
+      std::cout << pProgramState.registers[0] << std::endl;
     }
   }
 }
