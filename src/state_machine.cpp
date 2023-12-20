@@ -14,7 +14,6 @@ Program load_program(const char* pFilePath)
   
   int lineNum = 0;
   
-  // Pass 1: symbol table
   outProg.programLen = 0;
   bool isMultiLineComment = false;
   
@@ -44,8 +43,6 @@ Program load_program(const char* pFilePath)
     if(isMultiLineComment) continue;
     
     if(strcmp(token, "//") == 0) continue;
-
-    if(strcmp(token, ".END") == 0) break;
     
     if(strcmp(token, ".VAR") == 0)
     {
@@ -101,18 +98,18 @@ void execute_program(StateMachine& pProgramState, Program& pProgram)
   {
     pProgramState.instCount++;
     pProgramState.registers[0].assign("");
-    std::string inst = pProgram.ppInstructions[pProgramState.instCount];  
+    std::string inst = pProgram.ppInstructions[pProgramState.instCount];
 
-    if(inst.compare("STOP") == 0)
+    if(__instruction_exists(inst, "STOP"))
     {
       break;
     }
 
-    if(__instruction_exists(inst, "LOAD"))
+    if(__instruction_exists(inst, "SET"))
     {
       int reg;
       char stringVar[32];
-      sscanf(inst.c_str(), "LOAD r%i %s", &reg, &stringVar);
+      sscanf(inst.c_str(), "SET r%i %s", &reg, &stringVar);
       pProgramState.registers[reg].assign(pProgram.stringTable[stringVar].c_str());
       continue;
     }
@@ -163,6 +160,21 @@ void execute_program(StateMachine& pProgramState, Program& pProgram)
       double src2 = atof(pProgramState.registers[reg2].c_str());
       pProgramState.registers[reg3] = std::to_string(src1 / src2);
       continue;
+    }
+
+    if(__instruction_exists(inst, "JMP"))
+    {
+      int newLoc;
+      sscanf(inst.c_str(), "JMP %i", &newLoc);
+      pProgramState.instCount += newLoc - 1;
+      continue;
+    }
+
+    if(__instruction_exists(inst, "FLUSH"))
+    {
+      int reg;
+      sscanf(inst.c_str(), "FLUSH r%i", &reg);
+      pProgramState.registers[reg].assign("");
     }
   }
 }
