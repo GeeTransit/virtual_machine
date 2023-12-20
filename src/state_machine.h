@@ -28,7 +28,5 @@ struct Program
 };
 
 Program load_program(const char* pFilePath);
-void destroy_program(Program& pProgram);
-
 void reset_state(StateMachine& pProgramState);
 void execute_program(StateMachine& pProgramState, Program& pProgram);
