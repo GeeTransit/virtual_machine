@@ -113,6 +113,7 @@ void execute_program(StateMachine& pProgramState, Program& pProgram)
       char stringVar[32];
       sscanf(inst.c_str(), "LOAD r%i %s", &reg, &stringVar);
       pProgramState.registers[reg].assign(pProgram.stringTable[stringVar].c_str());
+      continue;
     }
 
     if(__instruction_exists(inst, "PRINTS"))
@@ -120,15 +121,47 @@ void execute_program(StateMachine& pProgramState, Program& pProgram)
       int reg;
       sscanf(inst.c_str(), "PRINTS r%i", &reg);
       std::cout << pProgramState.registers[reg] << std::endl;
+      continue;
     }
 
     if(__instruction_exists(inst, "ADD"))
     {
       int reg1, reg2, reg3;
       sscanf(inst.c_str(), "ADD r%i r%i r%i", &reg3, &reg1, &reg2);
-      int src1 = atoi(pProgramState.registers[reg1].c_str());
-      int src2 = atoi(pProgramState.registers[reg2].c_str());
+      double src1 = atof(pProgramState.registers[reg1].c_str());
+      double src2 = atof(pProgramState.registers[reg2].c_str());
       pProgramState.registers[reg3] = std::to_string(src1 + src2);
+      continue;
+    }
+
+    if(__instruction_exists(inst, "SUB"))
+    {
+      int reg1, reg2, reg3;
+      sscanf(inst.c_str(), "SUB r%i r%i r%i", &reg3, &reg1, &reg2);
+      double src1 = atof(pProgramState.registers[reg1].c_str());
+      double src2 = atof(pProgramState.registers[reg2].c_str());
+      pProgramState.registers[reg3] = std::to_string(src1 - src2);
+      continue;
+    }
+
+    if(__instruction_exists(inst, "MUL"))
+    {
+      int reg1, reg2, reg3;
+      sscanf(inst.c_str(), "MUL r%i r%i r%i", &reg3, &reg1, &reg2);
+      double src1 = atof(pProgramState.registers[reg1].c_str());
+      double src2 = atof(pProgramState.registers[reg2].c_str());
+      pProgramState.registers[reg3] = std::to_string(src1 * src2);
+      continue;
+    }
+
+    if(__instruction_exists(inst, "DIV"))
+    {
+      int reg1, reg2, reg3;
+      sscanf(inst.c_str(), "DIV r%i r%i r%i", &reg3, &reg1, &reg2);
+      double src1 = atof(pProgramState.registers[reg1].c_str());
+      double src2 = atof(pProgramState.registers[reg2].c_str());
+      pProgramState.registers[reg3] = std::to_string(src1 / src2);
+      continue;
     }
   }
 }
