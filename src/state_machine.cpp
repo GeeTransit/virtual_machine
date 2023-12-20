@@ -70,8 +70,16 @@ void reset_state(StateMachine& pProgramState)
 
   for(int i = 0; i < NUM_REGISTERS; i++)
   {
-    pProgramState.registers.push_back("");
+    std::string empty("0", 16);
+    pProgramState.registers.push_back(empty);
   }
+}
+
+bool __instruction_exists(
+  std::string instruction,
+  const char* instructionName)
+{
+  return instruction.find(instructionName) != std::string::npos;
 }
 
 void execute_program(StateMachine& pProgramState, Program& pProgram)
@@ -85,15 +93,17 @@ void execute_program(StateMachine& pProgramState, Program& pProgram)
       break;
     }
 
-    if(inst.find("LEA") != std::string::npos)
+    if(__instruction_exists(inst, "LEA"))
     {
       int reg;
       char stringVar[16];
       sscanf(inst.c_str(), "LEA r%i %s", &reg, &stringVar);
-      std::cout << pProgram.stringTable[stringVar] << std::endl;
       pProgramState.registers[reg] = pProgram.stringTable[stringVar];
     }
-  }
 
-  std::cout << pProgramState.registers[0] << std::endl;
+    if(__instruction_exists(inst, "PRINTS"))
+    {
+      printf("%s", pProgramState.registers[0]);
+    }
+  }
 }

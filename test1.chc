@@ -4,4 +4,4 @@ PRINTS
 
 STOP
 
-.STR HELLOSTR "Hello, World"
+.STR HELLO_STR "Hello, World!"
