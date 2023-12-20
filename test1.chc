@@ -12,7 +12,7 @@ LOAD r3 OTHER_INT
 
 PRINTS r2
 
-SUB r2 r2 r3
+SUB r1 r2 r3
 
 PRINTS r2
 

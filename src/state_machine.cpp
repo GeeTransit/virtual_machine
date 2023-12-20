@@ -100,6 +100,7 @@ void execute_program(StateMachine& pProgramState, Program& pProgram)
   while(true)
   {
     pProgramState.instCount++;
+    pProgramState.registers[0].assign("");
     std::string inst = pProgram.ppInstructions[pProgramState.instCount];  
 
     if(inst.compare("STOP") == 0)
