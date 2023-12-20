@@ -70,7 +70,7 @@ void reset_state(StateMachine& pProgramState)
 
   for(int i = 0; i < NUM_REGISTERS; i++)
   {
-    std::string empty = "";
+    std::string empty = " ";
     pProgramState.registers.push_back(empty);
   }
 }
@@ -94,11 +94,11 @@ void execute_program(StateMachine& pProgramState, Program& pProgram)
       break;
     }
 
-    if(__instruction_exists(inst, "LEA"))
+    if(__instruction_exists(inst, "LOAD"))
     {
       int reg;
-      char stringVar[16];
-      sscanf(inst.c_str(), "LEA r%i %s", &reg, &stringVar);
+      char stringVar[32];
+      sscanf(inst.c_str(), "LOAD r%i %s", &reg, &stringVar);
       pProgramState.registers[reg].assign(pProgram.stringTable[stringVar].c_str());
     }
 
