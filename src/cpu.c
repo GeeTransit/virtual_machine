@@ -293,14 +293,12 @@ void opcode_l(CPU *cpu, U32 instruction)
   }
 }
 
-#include <stdio.h>
 void exec_sb(CPU *cpu, U32 instruction)
 {
   U8 rs1 = (instruction >> 15) & 0x1F;
   U8 rs2 = (instruction >> 20) & 0x1F;
   U8 imm = ((instruction & 0xFE000000) >> 20) | ((instruction >> 7) & 0x1F);
   U8 addr = cpu->reg[rs1] + imm;
-  printf("%04x, %04x, %04x\n\n", cpu->reg[rs2], imm, instruction);
   cpu->dram.mem[addr] = cpu->reg[rs2] & 0xFF;
 }
 
