@@ -1,2 +1,2 @@
-# Virtual Machine
-Simulated virtual machine for a fictional assembly language.
+# RISC-V Virtual Machine
+Simulated virtual machine for the RISC-V instruction set architecture.
