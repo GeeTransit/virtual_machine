@@ -467,9 +467,7 @@ void execute_instruction(CPU *cpu, U32 instruction)
     {opcode_jalr(cpu, instruction);} break;
 
     case OPCODE_ECALL:
-    {
-      if(cpu->reg[17] == 2) return;
-    } break;
+    {return;} break;
 
     case OPCODE_LUI:
     {opcode_lui(cpu, instruction);} break;
@@ -479,5 +477,5 @@ void execute_instruction(CPU *cpu, U32 instruction)
   }
   
   cpu->reg[0] = 0;
-  cpu->pc += 1;
+  cpu->pc += 4;
 }
